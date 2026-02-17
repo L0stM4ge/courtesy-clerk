@@ -1,0 +1,272 @@
+[gd_scene load_steps=4 format=3 uid="uid://cstore001"]
+
+[ext_resource type="Script" path="res://scenes/zones/store/store.gd" id="1_store"]
+[ext_resource type="PackedScene" uid="uid://czonetrans001" path="res://scenes/interactables/zone_transition.tscn" id="2_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(16, 16)
+
+[node name="Store" type="Node2D"]
+script = ExtResource("1_store")
+
+[node name="Floor" type="Node2D" parent="."]
+
+[node name="FloorRect" type="ColorRect" parent="Floor"]
+offset_left = -400.0
+offset_top = -600.0
+offset_right = 400.0
+offset_bottom = 200.0
+color = Color(0.85, 0.82, 0.75, 1)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -600)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("RectangleShape2D_wall")
+one_way_collision_margin = 0.0
+
+[node name="WallRect" type="ColorRect" parent="Walls/TopWall"]
+offset_left = -400.0
+offset_top = -8.0
+offset_right = 400.0
+offset_bottom = 8.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-400, -200)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = -8.0
+offset_top = -408.0
+offset_right = 8.0
+offset_bottom = 408.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(400, -200)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/RightWall"]
+offset_left = -8.0
+offset_top = -408.0
+offset_right = 8.0
+offset_bottom = 408.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 200)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/BottomWall"]
+offset_left = -400.0
+offset_top = -8.0
+offset_right = 400.0
+offset_bottom = 8.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="Aisles" type="Node2D" parent="."]
+
+[node name="Aisle1" type="Node2D" parent="Aisles"]
+position = Vector2(-280, -300)
+
+[node name="Shelves" type="StaticBody2D" parent="Aisles/Aisle1"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aisles/Aisle1/Shelves"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ShelfVisual" type="ColorRect" parent="Aisles/Aisle1/Shelves"]
+offset_left = -24.0
+offset_top = -200.0
+offset_right = 24.0
+offset_bottom = 200.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="Aisle2" type="Node2D" parent="Aisles"]
+position = Vector2(-140, -300)
+
+[node name="Shelves" type="StaticBody2D" parent="Aisles/Aisle2"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aisles/Aisle2/Shelves"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ShelfVisual" type="ColorRect" parent="Aisles/Aisle2/Shelves"]
+offset_left = -24.0
+offset_top = -200.0
+offset_right = 24.0
+offset_bottom = 200.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="Aisle3" type="Node2D" parent="Aisles"]
+position = Vector2(0, -300)
+
+[node name="Shelves" type="StaticBody2D" parent="Aisles/Aisle3"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aisles/Aisle3/Shelves"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ShelfVisual" type="ColorRect" parent="Aisles/Aisle3/Shelves"]
+offset_left = -24.0
+offset_top = -200.0
+offset_right = 24.0
+offset_bottom = 200.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="Aisle4" type="Node2D" parent="Aisles"]
+position = Vector2(140, -300)
+
+[node name="Shelves" type="StaticBody2D" parent="Aisles/Aisle4"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aisles/Aisle4/Shelves"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ShelfVisual" type="ColorRect" parent="Aisles/Aisle4/Shelves"]
+offset_left = -24.0
+offset_top = -200.0
+offset_right = 24.0
+offset_bottom = 200.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="Aisle5" type="Node2D" parent="Aisles"]
+position = Vector2(280, -300)
+
+[node name="Shelves" type="StaticBody2D" parent="Aisles/Aisle5"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aisles/Aisle5/Shelves"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ShelfVisual" type="ColorRect" parent="Aisles/Aisle5/Shelves"]
+offset_left = -24.0
+offset_top = -200.0
+offset_right = 24.0
+offset_bottom = 200.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="Registers" type="Node2D" parent="."]
+position = Vector2(0, 100)
+
+[node name="Register1" type="StaticBody2D" parent="Registers"]
+position = Vector2(-280, 0)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Registers/Register1"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RegisterVisual" type="ColorRect" parent="Registers/Register1"]
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 32.0
+offset_bottom = 24.0
+color = Color(0.3, 0.3, 0.35, 1)
+
+[node name="Register2" type="StaticBody2D" parent="Registers"]
+position = Vector2(-140, 0)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Registers/Register2"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RegisterVisual" type="ColorRect" parent="Registers/Register2"]
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 32.0
+offset_bottom = 24.0
+color = Color(0.3, 0.3, 0.35, 1)
+
+[node name="Register3" type="StaticBody2D" parent="Registers"]
+position = Vector2(0, 0)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Registers/Register3"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RegisterVisual" type="ColorRect" parent="Registers/Register3"]
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 32.0
+offset_bottom = 24.0
+color = Color(0.3, 0.3, 0.35, 1)
+
+[node name="Register4" type="StaticBody2D" parent="Registers"]
+position = Vector2(140, 0)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Registers/Register4"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RegisterVisual" type="ColorRect" parent="Registers/Register4"]
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 32.0
+offset_bottom = 24.0
+color = Color(0.3, 0.3, 0.35, 1)
+
+[node name="Register5" type="StaticBody2D" parent="Registers"]
+position = Vector2(280, 0)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Registers/Register5"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RegisterVisual" type="ColorRect" parent="Registers/Register5"]
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 32.0
+offset_bottom = 24.0
+color = Color(0.3, 0.3, 0.35, 1)
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="default" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(0, 50)
+
+[node name="from_parking_lot_1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(-200, 150)
+
+[node name="from_parking_lot_2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(200, 150)
+
+[node name="from_backroom" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(-300, -550)
+
+[node name="from_bathroom" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(300, -550)
+
+[node name="ZoneTransitions" type="Node2D" parent="."]
+
+[node name="ToParkingLot1" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(-200, 192)
+target_zone = "parking_lot"
+spawn_point = "from_store_1"
+
+[node name="ToParkingLot2" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(200, 192)
+target_zone = "parking_lot"
+spawn_point = "from_store_2"
+
+[node name="ToBackroom" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(-300, -592)
+target_zone = "backroom"
+spawn_point = "from_store"
+
+[node name="ToBathroom" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(300, -592)
+target_zone = "bathroom"
+spawn_point = "from_store"

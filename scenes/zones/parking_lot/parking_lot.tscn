@@ -1,0 +1,169 @@
+[gd_scene load_steps=4 format=3 uid="uid://cparkinglot001"]
+
+[ext_resource type="Script" path="res://scenes/zones/parking_lot/parking_lot.gd" id="1_parking"]
+[ext_resource type="PackedScene" uid="uid://czonetrans001" path="res://scenes/interactables/zone_transition.tscn" id="2_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(16, 16)
+
+[node name="ParkingLot" type="Node2D"]
+script = ExtResource("1_parking")
+
+[node name="Ground" type="ColorRect" parent="."]
+offset_left = -500.0
+offset_top = -400.0
+offset_right = 500.0
+offset_bottom = 200.0
+color = Color(0.25, 0.25, 0.28, 1)
+
+[node name="ParkingLines" type="Node2D" parent="."]
+
+[node name="Line1" type="ColorRect" parent="ParkingLines"]
+offset_left = -400.0
+offset_top = -300.0
+offset_right = -395.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line2" type="ColorRect" parent="ParkingLines"]
+offset_left = -300.0
+offset_top = -300.0
+offset_right = -295.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line3" type="ColorRect" parent="ParkingLines"]
+offset_left = -200.0
+offset_top = -300.0
+offset_right = -195.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line4" type="ColorRect" parent="ParkingLines"]
+offset_left = -100.0
+offset_top = -300.0
+offset_right = -95.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line5" type="ColorRect" parent="ParkingLines"]
+offset_top = -300.0
+offset_right = 5.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line6" type="ColorRect" parent="ParkingLines"]
+offset_left = 100.0
+offset_top = -300.0
+offset_right = 105.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line7" type="ColorRect" parent="ParkingLines"]
+offset_left = 200.0
+offset_top = -300.0
+offset_right = 205.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line8" type="ColorRect" parent="ParkingLines"]
+offset_left = 300.0
+offset_top = -300.0
+offset_right = 305.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Line9" type="ColorRect" parent="ParkingLines"]
+offset_left = 400.0
+offset_top = -300.0
+offset_right = 405.0
+offset_bottom = -100.0
+color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="StoreFront" type="ColorRect" parent="."]
+offset_left = -500.0
+offset_top = 100.0
+offset_right = 500.0
+offset_bottom = 200.0
+color = Color(0.6, 0.55, 0.5, 1)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -400)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/TopWall"]
+offset_left = -500.0
+offset_top = -8.0
+offset_right = 500.0
+offset_bottom = 8.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-500, -100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = -8.0
+offset_top = -308.0
+offset_right = 8.0
+offset_bottom = 308.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(500, -100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/RightWall"]
+offset_left = -8.0
+offset_top = -308.0
+offset_right = 8.0
+offset_bottom = 308.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 200)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/BottomWall"]
+offset_left = -500.0
+offset_top = -8.0
+offset_right = 500.0
+offset_bottom = 8.0
+color = Color(0.6, 0.55, 0.5, 1)
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="default" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(0, 0)
+
+[node name="from_store_1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(-200, 50)
+
+[node name="from_store_2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(200, 50)
+
+[node name="ZoneTransitions" type="Node2D" parent="."]
+
+[node name="ToStore1" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(-200, 140)
+target_zone = "store"
+spawn_point = "from_parking_lot_1"
+
+[node name="ToStore2" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(200, 140)
+target_zone = "store"
+spawn_point = "from_parking_lot_2"

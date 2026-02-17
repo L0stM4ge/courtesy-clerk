@@ -1,0 +1,180 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbathroom001"]
+
+[ext_resource type="Script" path="res://scenes/zones/bathroom/bathroom.gd" id="1_bathroom"]
+[ext_resource type="PackedScene" uid="uid://czonetrans001" path="res://scenes/interactables/zone_transition.tscn" id="2_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(16, 16)
+
+[node name="Bathroom" type="Node2D"]
+script = ExtResource("1_bathroom")
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 100.0
+color = Color(0.9, 0.9, 0.92, 1)
+
+[node name="Divider" type="StaticBody2D" parent="."]
+position = Vector2(0, -50)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Divider"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="DividerRect" type="ColorRect" parent="Divider"]
+offset_left = -4.0
+offset_top = -150.0
+offset_right = 4.0
+offset_bottom = 50.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="MaleLabel" type="Label" parent="."]
+offset_left = -160.0
+offset_top = -180.0
+offset_right = -40.0
+offset_bottom = -150.0
+text = "Men"
+horizontal_alignment = 1
+
+[node name="FemaleLabel" type="Label" parent="."]
+offset_left = 40.0
+offset_top = -180.0
+offset_right = 160.0
+offset_bottom = -150.0
+text = "Women"
+horizontal_alignment = 1
+
+[node name="MaleStalls" type="Node2D" parent="."]
+
+[node name="Stall1" type="StaticBody2D" parent="MaleStalls"]
+position = Vector2(-150, -100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MaleStalls/Stall1"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="StallVisual" type="ColorRect" parent="MaleStalls/Stall1"]
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 24.0
+offset_bottom = 32.0
+color = Color(0.7, 0.7, 0.72, 1)
+
+[node name="Stall2" type="StaticBody2D" parent="MaleStalls"]
+position = Vector2(-80, -100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MaleStalls/Stall2"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="StallVisual" type="ColorRect" parent="MaleStalls/Stall2"]
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 24.0
+offset_bottom = 32.0
+color = Color(0.7, 0.7, 0.72, 1)
+
+[node name="FemaleStalls" type="Node2D" parent="."]
+
+[node name="Stall1" type="StaticBody2D" parent="FemaleStalls"]
+position = Vector2(80, -100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FemaleStalls/Stall1"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="StallVisual" type="ColorRect" parent="FemaleStalls/Stall1"]
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 24.0
+offset_bottom = 32.0
+color = Color(0.7, 0.7, 0.72, 1)
+
+[node name="Stall2" type="StaticBody2D" parent="FemaleStalls"]
+position = Vector2(150, -100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FemaleStalls/Stall2"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="StallVisual" type="ColorRect" parent="FemaleStalls/Stall2"]
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 24.0
+offset_bottom = 32.0
+color = Color(0.7, 0.7, 0.72, 1)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -200)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/TopWall"]
+offset_left = -200.0
+offset_top = -8.0
+offset_right = 200.0
+offset_bottom = 8.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-200, -50)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = -8.0
+offset_top = -158.0
+offset_right = 8.0
+offset_bottom = 158.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(200, -50)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/RightWall"]
+offset_left = -8.0
+offset_top = -158.0
+offset_right = 8.0
+offset_bottom = 158.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 100)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRect" type="ColorRect" parent="Walls/BottomWall"]
+offset_left = -200.0
+offset_top = -8.0
+offset_right = 200.0
+offset_bottom = 8.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="default" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(0, 50)
+
+[node name="from_store" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(0, 50)
+
+[node name="ZoneTransitions" type="Node2D" parent="."]
+
+[node name="ToStore" parent="ZoneTransitions" instance=ExtResource("2_transition")]
+position = Vector2(0, 92)
+target_zone = "store"
+spawn_point = "from_bathroom"
