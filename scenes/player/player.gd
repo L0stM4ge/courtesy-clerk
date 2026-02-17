@@ -18,6 +18,7 @@ var current_direction: Direction = Direction.DOWN
 var facing_direction: Vector2 = Vector2.DOWN
 var interactables_in_range: Array[Node2D] = []
 var can_move: bool = true
+var grabbed_cart: Node2D = null  # Reference to currently held cart
 
 
 func _ready() -> void:
@@ -132,3 +133,9 @@ func enable_movement() -> void:
 func disable_movement() -> void:
 	can_move = false
 	velocity = Vector2.ZERO
+
+
+func hit_by_vehicle() -> void:
+	# Called when player is hit by a vehicle
+	if grabbed_cart and grabbed_cart.has_method("hit_by_vehicle"):
+		grabbed_cart.hit_by_vehicle()

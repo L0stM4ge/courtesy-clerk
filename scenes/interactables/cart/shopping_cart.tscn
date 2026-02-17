@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccart001"]
+
+[ext_resource type="Script" path="res://scenes/interactables/cart/shopping_cart.gd" id="1_cart"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cart"]
+size = Vector2(20, 28)
+
+[node name="ShoppingCart" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_cart")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cart")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="CartBody" type="ColorRect" parent="Visual"]
+offset_left = -10.0
+offset_top = -14.0
+offset_right = 10.0
+offset_bottom = 14.0
+color = Color(0.7, 0.7, 0.75, 1)
+
+[node name="CartHandle" type="ColorRect" parent="Visual"]
+offset_left = -8.0
+offset_top = 10.0
+offset_right = 8.0
+offset_bottom = 18.0
+color = Color(0.4, 0.4, 0.45, 1)
+
+[node name="CartWheels" type="Node2D" parent="Visual"]
+
+[node name="Wheel1" type="ColorRect" parent="Visual/CartWheels"]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = -8.0
+offset_bottom = -8.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Wheel2" type="ColorRect" parent="Visual/CartWheels"]
+offset_left = 8.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = -8.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Wheel3" type="ColorRect" parent="Visual/CartWheels"]
+offset_left = -12.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 12.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Wheel4" type="ColorRect" parent="Visual/CartWheels"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_cart")

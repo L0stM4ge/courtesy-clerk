@@ -1,0 +1,107 @@
+[gd_scene load_steps=3 format=3 uid="uid://csedan001"]
+
+[ext_resource type="Script" path="res://scenes/vehicles/sedan.gd" id="1_sedan"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sedan"]
+size = Vector2(25, 45)
+
+[node name="Sedan" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 19
+script = ExtResource("1_sedan")
+speed = 120.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sedan")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -12.5
+offset_top = -22.5
+offset_right = 12.5
+offset_bottom = 22.5
+color = Color(0.2, 0.35, 0.55, 1)
+
+[node name="Roof" type="ColorRect" parent="Visual"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.25, 0.4, 0.6, 1)
+
+[node name="Windshield" type="ColorRect" parent="Visual"]
+offset_left = -10.0
+offset_top = -17.5
+offset_right = 10.0
+offset_bottom = -10.0
+color = Color(0.3, 0.4, 0.5, 1)
+
+[node name="RearWindow" type="ColorRect" parent="Visual"]
+offset_left = -9.0
+offset_top = 10.0
+offset_right = 9.0
+offset_bottom = 16.0
+color = Color(0.3, 0.4, 0.5, 1)
+
+[node name="Headlights" type="Node2D" parent="Visual"]
+
+[node name="Left" type="ColorRect" parent="Visual/Headlights"]
+offset_left = -11.0
+offset_top = -22.0
+offset_right = -6.0
+offset_bottom = -19.0
+color = Color(1, 0.95, 0.8, 1)
+
+[node name="Right" type="ColorRect" parent="Visual/Headlights"]
+offset_left = 6.0
+offset_top = -22.0
+offset_right = 11.0
+offset_bottom = -19.0
+color = Color(1, 0.95, 0.8, 1)
+
+[node name="Taillights" type="Node2D" parent="Visual"]
+
+[node name="Left" type="ColorRect" parent="Visual/Taillights"]
+offset_left = -11.0
+offset_top = 19.0
+offset_right = -6.0
+offset_bottom = 22.0
+color = Color(0.8, 0.1, 0.1, 1)
+
+[node name="Right" type="ColorRect" parent="Visual/Taillights"]
+offset_left = 6.0
+offset_top = 19.0
+offset_right = 11.0
+offset_bottom = 22.0
+color = Color(0.8, 0.1, 0.1, 1)
+
+[node name="Wheels" type="Node2D" parent="Visual"]
+
+[node name="FrontLeft" type="ColorRect" parent="Visual/Wheels"]
+offset_left = -14.0
+offset_top = -19.0
+offset_right = -11.0
+offset_bottom = -11.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="FrontRight" type="ColorRect" parent="Visual/Wheels"]
+offset_left = 11.0
+offset_top = -19.0
+offset_right = 14.0
+offset_bottom = -11.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="RearLeft" type="ColorRect" parent="Visual/Wheels"]
+offset_left = -14.0
+offset_top = 11.0
+offset_right = -11.0
+offset_bottom = 19.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="RearRight" type="ColorRect" parent="Visual/Wheels"]
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 14.0
+offset_bottom = 19.0
+color = Color(0.1, 0.1, 0.1, 1)

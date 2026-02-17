@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmotorcycle001"]
+
+[ext_resource type="Script" path="res://scenes/vehicles/motorcycle.gd" id="1_motorcycle"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_motorcycle"]
+size = Vector2(20, 50)
+
+[node name="Motorcycle" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 19
+script = ExtResource("1_motorcycle")
+speed = 180.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_motorcycle")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -10.0
+offset_top = -25.0
+offset_right = 10.0
+offset_bottom = 25.0
+color = Color(0.15, 0.15, 0.18, 1)
+
+[node name="Tank" type="ColorRect" parent="Visual"]
+offset_left = -8.0
+offset_top = -5.0
+offset_right = 8.0
+offset_bottom = 10.0
+color = Color(0.7, 0.1, 0.1, 1)
+
+[node name="Seat" type="ColorRect" parent="Visual"]
+offset_left = -7.0
+offset_top = 5.0
+offset_right = 7.0
+offset_bottom = 18.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Headlight" type="ColorRect" parent="Visual"]
+offset_left = -5.0
+offset_top = -24.0
+offset_right = 5.0
+offset_bottom = -20.0
+color = Color(1, 0.95, 0.7, 1)
+
+[node name="Taillight" type="ColorRect" parent="Visual"]
+offset_left = -4.0
+offset_top = 22.0
+offset_right = 4.0
+offset_bottom = 25.0
+color = Color(0.8, 0.1, 0.1, 1)
+
+[node name="FrontWheel" type="ColorRect" parent="Visual"]
+offset_left = -6.0
+offset_top = -22.0
+offset_right = 6.0
+offset_bottom = -15.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="RearWheel" type="ColorRect" parent="Visual"]
+offset_left = -6.0
+offset_top = 15.0
+offset_right = 6.0
+offset_bottom = 22.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="Handlebars" type="ColorRect" parent="Visual"]
+offset_left = -12.0
+offset_top = -18.0
+offset_right = 12.0
+offset_bottom = -15.0
+color = Color(0.4, 0.4, 0.4, 1)

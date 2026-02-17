@@ -1,0 +1,128 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmomvan001"]
+
+[ext_resource type="Script" path="res://scenes/vehicles/mom_van.gd" id="1_momvan"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_momvan"]
+size = Vector2(32, 60)
+
+[node name="MomVan" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 19
+script = ExtResource("1_momvan")
+speed = 250.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_momvan")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -16.0
+offset_top = -30.0
+offset_right = 16.0
+offset_bottom = 30.0
+color = Color(0.85, 0.85, 0.88, 1)
+
+[node name="Roof" type="ColorRect" parent="Visual"]
+offset_left = -14.0
+offset_top = -22.0
+offset_right = 14.0
+offset_bottom = 17.0
+color = Color(0.9, 0.9, 0.92, 1)
+
+[node name="Windshield" type="ColorRect" parent="Visual"]
+offset_left = -13.0
+offset_top = -25.0
+offset_right = 13.0
+offset_bottom = -15.0
+color = Color(0.2, 0.25, 0.35, 1)
+
+[node name="RearWindow" type="ColorRect" parent="Visual"]
+offset_left = -13.0
+offset_top = 15.0
+offset_right = 13.0
+offset_bottom = 22.0
+color = Color(0.2, 0.25, 0.35, 1)
+
+[node name="SideWindowLeft" type="ColorRect" parent="Visual"]
+offset_left = -16.5
+offset_top = -12.0
+offset_right = -14.0
+offset_bottom = 10.0
+color = Color(0.2, 0.25, 0.35, 1)
+
+[node name="SideWindowRight" type="ColorRect" parent="Visual"]
+offset_left = 14.0
+offset_top = -12.0
+offset_right = 16.5
+offset_bottom = 10.0
+color = Color(0.2, 0.25, 0.35, 1)
+
+[node name="Headlights" type="Node2D" parent="Visual"]
+
+[node name="Left" type="ColorRect" parent="Visual/Headlights"]
+offset_left = -14.0
+offset_top = -29.0
+offset_right = -9.0
+offset_bottom = -26.0
+color = Color(1, 0.95, 0.7, 1)
+
+[node name="Right" type="ColorRect" parent="Visual/Headlights"]
+offset_left = 9.0
+offset_top = -29.0
+offset_right = 14.0
+offset_bottom = -26.0
+color = Color(1, 0.95, 0.7, 1)
+
+[node name="Taillights" type="Node2D" parent="Visual"]
+
+[node name="Left" type="ColorRect" parent="Visual/Taillights"]
+offset_left = -14.0
+offset_top = 26.0
+offset_right = -9.0
+offset_bottom = 29.0
+color = Color(0.8, 0.1, 0.1, 1)
+
+[node name="Right" type="ColorRect" parent="Visual/Taillights"]
+offset_left = 9.0
+offset_top = 26.0
+offset_right = 14.0
+offset_bottom = 29.0
+color = Color(0.8, 0.1, 0.1, 1)
+
+[node name="Wheels" type="Node2D" parent="Visual"]
+
+[node name="FrontLeft" type="ColorRect" parent="Visual/Wheels"]
+offset_left = -19.0
+offset_top = -25.0
+offset_right = -15.0
+offset_bottom = -15.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="FrontRight" type="ColorRect" parent="Visual/Wheels"]
+offset_left = 15.0
+offset_top = -25.0
+offset_right = 19.0
+offset_bottom = -15.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="RearLeft" type="ColorRect" parent="Visual/Wheels"]
+offset_left = -19.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 25.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="RearRight" type="ColorRect" parent="Visual/Wheels"]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 19.0
+offset_bottom = 25.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="BumperSticker" type="ColorRect" parent="Visual"]
+offset_left = -5.0
+offset_top = 24.0
+offset_right = 5.0
+offset_bottom = 27.0
+color = Color(0.9, 0.8, 0.3, 1)

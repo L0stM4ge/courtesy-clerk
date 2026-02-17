@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvehicle001"]
+
+[ext_resource type="Script" path="res://scenes/vehicles/vehicle_base.gd" id="1_vehicle"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vehicle"]
+size = Vector2(55, 100)
+
+[node name="VehicleBase" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 19
+script = ExtResource("1_vehicle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vehicle")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -27.5
+offset_top = -50.0
+offset_right = 27.5
+offset_bottom = 50.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Windshield" type="ColorRect" parent="Visual"]
+offset_left = -22.0
+offset_top = -40.0
+offset_right = 22.0
+offset_bottom = -20.0
+color = Color(0.3, 0.4, 0.5, 1)
+
+[node name="Wheels" type="Node2D" parent="Visual"]
+
+[node name="FrontLeft" type="ColorRect" parent="Visual/Wheels"]
+offset_left = -32.0
+offset_top = -40.0
+offset_right = -25.0
+offset_bottom = -25.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="FrontRight" type="ColorRect" parent="Visual/Wheels"]
+offset_left = 25.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = -25.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="RearLeft" type="ColorRect" parent="Visual/Wheels"]
+offset_left = -32.0
+offset_top = 25.0
+offset_right = -25.0
+offset_bottom = 40.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="RearRight" type="ColorRect" parent="Visual/Wheels"]
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 32.0
+offset_bottom = 40.0
+color = Color(0.15, 0.15, 0.15, 1)
