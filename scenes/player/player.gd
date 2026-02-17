@@ -4,9 +4,13 @@ class_name Player
 
 signal interacted_with(interactable: Node2D)
 
+enum Direction { DOWN, UP, LEFT, RIGHT }
+
 @export var move_speed: float = 150.0
 
 @onready var sprite: Sprite2D = $Sprite2D
+
+var current_direction: Direction = Direction.DOWN
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var camera: Camera2D = $Camera2D
@@ -56,11 +60,18 @@ func _handle_movement() -> void:
 
 
 func _update_sprite_direction() -> void:
-	# Placeholder: flip sprite based on horizontal direction
+	# Horizontal movement takes priority for sprite flip
 	if facing_direction.x < 0:
+		current_direction = Direction.LEFT
 		sprite.flip_h = true
 	elif facing_direction.x > 0:
+		current_direction = Direction.RIGHT
 		sprite.flip_h = false
+	# Pure vertical movement
+	elif facing_direction.y < 0:
+		current_direction = Direction.UP
+	elif facing_direction.y > 0:
+		current_direction = Direction.DOWN
 
 
 func _try_interact() -> void:
