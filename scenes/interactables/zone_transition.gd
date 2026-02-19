@@ -36,17 +36,3 @@ func _do_transition() -> void:
 		await get_tree().create_timer(transition_delay).timeout
 
 	transition_triggered.emit(target_zone, spawn_point)
-
-	# Notify parent zone
-	var zone := _find_zone_parent()
-	if zone and zone.has_signal("zone_transition_requested"):
-		zone.zone_transition_requested.emit(target_zone, spawn_point)
-
-
-func _find_zone_parent() -> Node:
-	var parent := get_parent()
-	while parent:
-		if parent.has_signal("zone_transition_requested"):
-			return parent
-		parent = parent.get_parent()
-	return null

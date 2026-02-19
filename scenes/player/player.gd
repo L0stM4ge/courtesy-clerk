@@ -3,10 +3,14 @@ class_name Player
 ## Player - The zombie grocery bagger controlled by the player
 
 signal interacted_with(interactable: Node2D)
+signal hp_changed(current_hp: int, max_hp: int)
+signal player_died
 
 enum Direction { DOWN, UP, LEFT, RIGHT }
 
 @export var move_speed: float = 150.0
+@export var max_hp: int = 5
+var current_hp: int = max_hp
 
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -19,6 +23,7 @@ var facing_direction: Vector2 = Vector2.DOWN
 var interactables_in_range: Array[Node2D] = []
 var can_move: bool = true
 var grabbed_cart: Node2D = null  # Reference to currently held cart
+var invincible: bool = false
 
 
 func _ready() -> void:
@@ -136,6 +141,25 @@ func disable_movement() -> void:
 
 
 func hit_by_vehicle() -> void:
+	if invincible:
+		return
+
 	# Called when player is hit by a vehicle
 	if grabbed_cart and grabbed_cart.has_method("hit_by_vehicle"):
 		grabbed_cart.hit_by_vehicle()
+
+	current_hp -= 1
+	hp_changed.emit(current_hp, max_hp)
+
+	if current_hp <= 0:
+		player_died.emit()
+		return
+
+	# Brief invincibility so the same vehicle doesn't drain all HP
+	invincible = true
+	get_tree().create_timer(1.0).timeout.connect(func(): invincible = false)
+
+
+func reset_hp() -> void:
+	current_hp = max_hp
+	hp_changed.emit(current_hp, max_hp)

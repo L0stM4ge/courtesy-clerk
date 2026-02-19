@@ -8,8 +8,11 @@ signal vehicle_despawned(vehicle: Node2D)
 @export var spawn_enabled: bool = true
 @export var min_spawn_interval: float = 2.0
 @export var max_spawn_interval: float = 5.0
-@export var max_active_vehicles: int = 6
+@export var max_active_vehicles: int = 30
 @export var broom_spawn_chance: float = 0.15  # 15% chance for a broom
+@export var parking_chance: float = 0.4
+@export var max_parked_vehicles: int = 20
+@export var target_parked_vehicles: int = 15  # Parking chance ramps up below this
 
 # Vehicle scenes
 var sedan_scene: PackedScene = preload("res://scenes/vehicles/sedan.tscn")
@@ -24,6 +27,9 @@ var vertical_lanes: Array[Dictionary] = []
 # Broom rack reference
 var broom_rack: BroomRack = null
 
+# Parking manager reference
+var parking_manager: ParkingManager = null
+
 # Active vehicles
 var active_vehicles: Array[Node2D] = []
 var spawn_timer: float = 0.0
@@ -32,8 +38,9 @@ var next_spawn_time: float = 2.0
 
 func _ready() -> void:
 	_setup_lanes()
-	# Defer broom rack finding to ensure all nodes are ready
+	# Defer finding siblings to ensure all nodes are ready
 	call_deferred("_find_broom_rack")
+	call_deferred("_find_parking_manager")
 	next_spawn_time = randf_range(min_spawn_interval, max_spawn_interval)
 
 
@@ -55,22 +62,40 @@ func _setup_lanes() -> void:
 		"end_x": 550
 	})
 
-	# Vertical lanes (cars drive up from parking area, then turn)
-	# Left vertical lane: x = -135
+	# Vertical lanes (cars drive up from bottom, then turn onto horizontal lanes)
+	# West lane: x = -465
+	vertical_lanes.append({
+		"x": -465,
+		"direction": VehicleBase.Direction.UP,
+		"start_y": 650,
+		"turn_y": -175,
+		"will_turn": true
+	})
+
+	# Mid-left lane: x = -135
 	vertical_lanes.append({
 		"x": -135,
 		"direction": VehicleBase.Direction.UP,
 		"start_y": 650,
-		"turn_y": -175,  # Turn at bottom horizontal lane
+		"turn_y": -175,
 		"will_turn": true
 	})
 
-	# Right vertical lane: x = 135
+	# Mid-right lane: x = 135
 	vertical_lanes.append({
 		"x": 135,
 		"direction": VehicleBase.Direction.UP,
 		"start_y": 650,
-		"turn_y": -175,  # Turn at bottom horizontal lane
+		"turn_y": -175,
+		"will_turn": true
+	})
+
+	# East lane: x = 465
+	vertical_lanes.append({
+		"x": 465,
+		"direction": VehicleBase.Direction.UP,
+		"start_y": 650,
+		"turn_y": -175,
 		"will_turn": true
 	})
 
@@ -79,6 +104,17 @@ func _find_broom_rack() -> void:
 	var racks := get_tree().get_nodes_in_group("broom_rack")
 	if racks.size() > 0:
 		broom_rack = racks[0] as BroomRack
+
+
+func _find_parking_manager() -> void:
+	var parent := get_parent()
+	if parent:
+		for child in parent.get_children():
+			if child is ParkingManager:
+				parking_manager = child
+				break
+	if parking_manager:
+		parking_manager.pre_populate(self)
 
 
 func _process(delta: float) -> void:
@@ -106,12 +142,33 @@ func _cleanup_vehicles() -> void:
 			to_remove.append(vehicle)
 			continue
 
+		if vehicle is VehicleBase:
+			var vb := vehicle as VehicleBase
+			# Skip vehicles that are in parking states (not NONE or EXITING)
+			if vb.parking_state != VehicleBase.ParkingState.NONE and \
+				vb.parking_state != VehicleBase.ParkingState.EXITING:
+				continue
+
 		# Check if vehicle is out of bounds
 		var pos := vehicle.global_position
 		if pos.x < -600 or pos.x > 600 or pos.y < -500 or pos.y > 700:
 			to_remove.append(vehicle)
+			if vehicle is VehicleBase:
+				var vb := vehicle as VehicleBase
+				if vb.parking_manager and vb.parking_spot_index >= 0:
+					vb.parking_manager.release_spot(vb.parking_spot_index)
+					vb.parking_spot_index = -1
 			vehicle.queue_free()
 			vehicle_despawned.emit(vehicle)
+			continue
+
+		# Clean up stopped vehicles (e.g. hit north boundary)
+		if vehicle is VehicleBase and not vehicle.is_active:
+			var vb := vehicle as VehicleBase
+			if vb.parking_state == VehicleBase.ParkingState.NONE:
+				to_remove.append(vehicle)
+				vehicle.queue_free()
+				vehicle_despawned.emit(vehicle)
 
 	for vehicle in to_remove:
 		active_vehicles.erase(vehicle)
@@ -126,6 +183,51 @@ func _spawn_random_vehicle() -> void:
 
 
 func _spawn_ground_vehicle() -> void:
+	# Pick random vehicle type (weighted)
+	var vehicle: VehicleBase = _create_random_ground_vehicle()
+
+	# Check if this vehicle should park
+	var can_park := not (vehicle is Motorcycle)
+	if can_park and parking_manager:
+		var parked_count := parking_manager.get_parked_count()
+		if parked_count < max_parked_vehicles:
+			# Dynamic parking chance: ramps up when lot is emptier than target
+			var effective_chance := parking_chance
+			if parked_count < target_parked_vehicles:
+				var urgency := 1.0 - float(parked_count) / float(target_parked_vehicles)
+				effective_chance = lerpf(parking_chance, 0.95, urgency)
+			if randf() < effective_chance:
+				var spot_data := parking_manager.get_available_spot()
+				if not spot_data.is_empty():
+					_spawn_parking_vehicle(vehicle, spot_data)
+					return
+
+	# Otherwise, spawn as drive-through
+	_spawn_drive_through_vehicle(vehicle)
+
+
+func _spawn_parking_vehicle(vehicle: VehicleBase, spot_data: Dictionary) -> void:
+	var index: int = spot_data["index"]
+	var spot: Dictionary = spot_data["spot"]
+
+	# Claim the spot
+	parking_manager.claim_spot(index, vehicle)
+
+	# Spawn on bottom lane going RIGHT
+	vehicle.global_position = Vector2(-550, -175)
+	vehicle.set_direction(VehicleBase.Direction.RIGHT)
+	_rotate_vehicle_to_direction(vehicle, VehicleBase.Direction.RIGHT)
+
+	# Assign parking behavior
+	vehicle.assign_parking(index, spot["position"], spot["facing"], spot["aisle_x"], spot["row_y"], parking_manager)
+
+	# Add to scene
+	add_child(vehicle)
+	active_vehicles.append(vehicle)
+	vehicle_spawned.emit(vehicle)
+
+
+func _spawn_drive_through_vehicle(vehicle: VehicleBase) -> void:
 	# Pick random lane type (60% horizontal, 40% vertical)
 	var use_horizontal := randf() > 0.4
 	var lane: Dictionary
@@ -134,9 +236,6 @@ func _spawn_ground_vehicle() -> void:
 		lane = horizontal_lanes[randi() % horizontal_lanes.size()]
 	else:
 		lane = vertical_lanes[randi() % vertical_lanes.size()]
-
-	# Pick random vehicle type (weighted)
-	var vehicle: VehicleBase = _create_random_ground_vehicle()
 
 	# Position vehicle at lane start
 	if use_horizontal:
@@ -179,6 +278,14 @@ func _create_random_ground_vehicle() -> VehicleBase:
 		return motorcycle_scene.instantiate() as VehicleBase
 	else:
 		# 20% mom van
+		return mom_van_scene.instantiate() as VehicleBase
+
+
+func _create_random_parkable_vehicle() -> VehicleBase:
+	# Only sedan or mom_van (no motorcycles)
+	if randf() < 0.7:
+		return sedan_scene.instantiate() as VehicleBase
+	else:
 		return mom_van_scene.instantiate() as VehicleBase
 
 

@@ -27,6 +27,7 @@ func _collect_cart(cart: ShoppingCart) -> void:
 
 	# Release and collect the cart
 	cart.release()
+	cart.remove_from_group("cart")
 	carts_collected += 1
 	cart_collected.emit(cart)
 
